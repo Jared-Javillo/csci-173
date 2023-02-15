@@ -6,7 +6,7 @@
 #define f(x) 1/sqrt(1-pow(x,2))
 
 using namespace std;
-int main()
+int main(argc, char *argv[])
 {
     //Source: https://www.codesansar.com/numerical-methods/trapezoidal-rule-cpp-output.html
 
@@ -30,7 +30,7 @@ int main()
         trapezoidWidth = (upperLimit - lowerLimit)/trapezoidCount;
         result = f(lowerLimit) + f(upperLimit);
 
-        printf("Process 0 sending %d to %d, tag %d (%d processes in ring)\n", message, next, tag,
+        printf("Process 0 sending %d to %d, tag %d (%d processes in ring)\n", result, next, tag,
                 size);
         MPI_Send(&trapezoidID, 1, MPI_INT, next, tag, MPI_COMM_WORLD);
         MPI_Send(&result, 1, MPI_FLOAT, next, tag, MPI_COMM_WORLD);
