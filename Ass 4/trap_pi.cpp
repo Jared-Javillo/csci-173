@@ -2,39 +2,35 @@
 #include<math.h>
 
 /* Define function here */
-#define f(x) 1/(1+pow(x,2))
+#define f(x) 1/sqrt(1-pow(x,2))
 
 using namespace std;
 int main()
 {
- float lower, upper, integration=0.0, stepSize, k;
- int i, subInterval;
+//Source: https://www.codesansar.com/numerical-methods/trapezoidal-rule-cpp-output.html
 
- /* Input */
- cout<<"Enter lower limit of integration: ";
- cin>>lower;
- cout<<"Enter upper limit of integration: ";
- cin>>upper;
- cout<<"Enter number of sub intervals: ";
- cin>>subInterval;
+ float lowerLimit = -0.999999; 
+ float upperLimit = 0.999999; 
+ float result, trapezoidWidth, k;
 
- /* Calculation */
+ int i, trapezoidCount;
 
- /* Finding step size */
- stepSize = (upper - lower)/subInterval;
+ cout<<"Enter number of Steps: ";
+ cin>>trapezoidCount;
 
- /* Finding Integration Value */
- integration = f(lower) + f(upper);
+ trapezoidWidth = (upperLimit - lowerLimit)/trapezoidCount;
 
- for(i=1; i<= subInterval-1; i++)
+ result = f(lowerLimit) + f(upperLimit);
+
+ for(i=1; i < trapezoidCount; i++)
  {
-  k = lower + i*stepSize;
-  integration = integration + 2 * (f(k));
+  k = lowerLimit + i * trapezoidWidth;
+  result = result + 2 * (f(k));
  }
 
- integration = integration * stepSize/2;
+ result = result * trapezoidWidth/2;
 
- cout<< endl<<"Required value of integration is: "<< integration;
+ cout<< endl<<"Result is: "<< result;
 
  return 0;
 }
