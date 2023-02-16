@@ -3,10 +3,10 @@
 #include "mpi.h"
 
 /* Define function here */
-#define f(x) 1/sqrt(1-pow(x,2))
+#define f(x) 1/sqrt(1-x*x))
 
 using namespace std;
-int main(argc, char *argv[])
+int main(int argc, char *argv[])
 {
     //Source: https://www.codesansar.com/numerical-methods/trapezoidal-rule-cpp-output.html
 
