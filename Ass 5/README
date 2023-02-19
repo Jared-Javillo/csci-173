@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# download the bible
+https://raw.githubusercontent.com/mxw/grmr/master/src/finaltests/bible.txt
+
+# possible challenge ... remove punctuation marks and unecessary characters
+
+# you app must work by doing this
+cat bible.txt | ./mapper.py | sort | ./reducer.py > output.txt
+
+# run using hadoop streaming
+hadoop \
+    jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
+    -files "mapper.py,reducer.py" \
+    -mapper mapper.py \
+    -reducer reducer.py \
+    -input "wordcount/bible.txt" \
+    -output "wordcount/output" 
