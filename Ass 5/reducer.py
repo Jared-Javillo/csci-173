@@ -9,7 +9,7 @@ running_total = 0
  
 for input_line in sys.stdin:
    input_line = input_line.strip()
-   this_key, value = input_line.split("\t", 1)
+   this_key, value = input_line
    value = int(value)
  
    if last_key == this_key:
