@@ -5,5 +5,7 @@ import sys
 
 for line in sys.stdin:
     line = line.strip()
-    value = 1
-    print( "%s\t%d" % (line, value) )
+    keys = line.split()
+    for key in keys:
+        value = 1
+        print( "%s\t%d" % (key, value) )
