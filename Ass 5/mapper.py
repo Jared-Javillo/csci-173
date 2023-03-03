@@ -6,6 +6,6 @@ import sys
 for line in sys.stdin:
     line = line.strip()
     keys = line.split()
-    for key in keys:
+    for line in keys:
         value = 1
-        print( "%s\t%d" % (key, value) )
+        print( "%s\t%d" % (line, value) )
