@@ -1,0 +1,144 @@
+CREATE EXTERNAL TABLE IF NOT EXISTS my_table ( field1 string, field2 int, field3 string, field4 double ) 
+ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.JsonSerde'
+LOCATION '/path-to/my_table/';
+
+gcloud dataproc jobs submit hive \
+    --cluster=hive-ass-9\
+    --region=${REGION} \
+    --execute="CREATE EXTERNAL TABLE tweets (
+        interactions array<struct<
+            demographic:struct<
+                gender:string
+            >,
+            interaction:struct<
+                author: struct<
+                    username:string,
+                    name:string,
+                    id:string
+                >,
+                id:bigint
+            >,
+            klout:struct<
+                score:int
+            >
+        >>
+      )
+    ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
+    LOCATION 'gs://${WAREHOUSE_BUCKET}';"
+
+gcloud dataproc jobs submit hive\
+    --cluster=hive-ass-9-1\
+    --region='asia-south1'\
+    --execute="
+                ADD JAR gs://hive-ass-9/hive-json-serde.jar;
+               CREATE EXTERNAL TABLE tweets5 (
+                   interactions array<struct<
+                       demographic:struct<
+                           gender:string
+                       >,
+                       interaction:struct<
+                           author: struct<
+                               username:string,
+                               name:string,
+                               id:string
+                           >,
+                           id:bigint
+                       >,
+                       klout:struct<
+                           score:int
+                       >
+                   >>
+                   )
+                   ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
+                   LOCATION 'gs://hive-ass-9/data';"
+                   
+                CREATE EXTERNAL TABLE tweets13 (
+                    interactions array<struct<
+                        demographic:struct<
+                        gender:string
+                        >,
+                        interaction:struct<
+                        author: struct<
+                            username:string,
+                            name:string,
+                            id:string
+                        >,
+                        id:bigint
+                        >,
+                        klout:struct<
+                        score:int
+                        >
+                    >>
+                    )
+                    ROW FORMAT SERDE 'org.apache.hive.serde2.json.JsonSerDe'
+                    LOCATION 'gs://hive-ass-9/data';"
+
+gcloud dataproc jobs submit hive\
+    --cluster=hive-ass-9-1\
+    --region='asia-south1'\
+    --execute="
+                ADD JAR gs://hive-ass-9/hive-json-serde-0.2.jar;
+                CREATE EXTERNAL TABLE tweets4 (
+                    interactions array<struct<
+                        demographic:struct<
+                        gender:string
+                        >,
+                        interaction:struct<
+                        author: struct<
+                            username:string,
+                            name:string,
+                            id:string
+                        >,
+                        id:bigint
+                        >,
+                        klout:struct<
+                        score:int
+                        >
+                    >>
+                    )
+                    ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
+                    LOCATION 'gs://hive-ass-9/data';"
+
+gcloud dataproc jobs submit hive\
+    --cluster=hive-ass-9-1\
+    --region='asia-south1'\
+    --execute="set hive.json.serialize.exception.ignore=true;SELECT * FROM tweets3;"
+
+
+gcloud dataproc jobs submit hive 
+    --cluster="hive-ass-9" \ 
+    --region=${REGION} \ 
+    --execute="ADD JAR gs://hive-ass-9//hive-json-serde-0.2.jar;"
+
+gcloud dataproc jobs submit hive \
+    --cluster=hive-ass-9 \
+    --region=${REGION} \
+    --execute="ADD JAR gs://hive-ass-9/hive-json-serde-0.2.jar;"
+
+gcloud dataproc jobs submit hive \
+    --cluster=hive-ass-9\
+    --region='asia-south1'\
+    --execute="
+      CREATE EXTERNAL TABLE transactions
+      (SubmissionDate DATE, TransactionAmount DOUBLE, TransactionType STRING)
+      STORED AS PARQUET
+      LOCATION 'gs://hive-ass-9/datasets/transactions';"
+
+gcloud dataproc jobs submit hive \
+    --cluster hive-ass-9 \
+    --region ${REGION} \
+    --execute "
+      CREATE EXTERNAL TABLE transactions
+      (SubmissionDate DATE, TransactionAmount DOUBLE, TransactionType STRING)
+      STORED AS PARQUET
+      LOCATION 'gs://${WAREHOUSE_BUCKET}';"
+      
+gcloud dataproc jobs submit hive \
+    --cluster=hive-ass-9\
+    --region=asia-south1 \
+    --execute="
+      SELECT *
+      FROM transactions
+      LIMIT 10;"
+
+      
