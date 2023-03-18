@@ -7,8 +7,11 @@ import org.apache.hadoop.hbase.client.*;
 // Get the HBase configuration object
 Configuration config = HBaseConfiguration.create();
 
-// Create an HTable object for the "driver_data" table
-HTable table = new HTable(config, "driver_data");
+// Create a connection to the HBase cluster
+Connection connection = ConnectionFactory.createConnection(config);
+
+// Create a Table object for the "driver_data" table
+Table table = connection.getTable(TableName.valueOf("driver_data"));
 
 // Create a filter to select rows where SPEED > 30
 SingleColumnValueFilter filter = new SingleColumnValueFilter(
@@ -32,3 +35,7 @@ scanner.close();
 
 // Print the result
 System.out.println("Number of rows where SPEED > 30: " + rowCount);
+
+// Close the connection and table objects
+table.close();
+connection.close();
