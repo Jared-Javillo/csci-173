@@ -103,3 +103,7 @@ TBLPROPERTIES ("hbase.table.name" = "driver_data");
 SELECT COUNT(*) FROM driver_data_hive WHERE speed > 30;
 
 scan 'driver_data', {COLUMNS => 'cf:speed', FILTER => "SingleColumnValueFilter('cf', 'speed', >, 'binary:30')"} COUNT => 4000
+
+
+
+hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.separator=, -Dimporttsv.columns='HBASE_ROW_KEY,id:Driver_ID,speed:Speeding_Feature' speed_details hbase-ass-11-m/driver_details_2
